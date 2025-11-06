@@ -67,6 +67,7 @@ web_modules/
 
 # dotenv environment variable files
 .env
+.env*.local
 .env.*
 !.env.example
 
@@ -137,3 +138,22 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Solid JS
+.wrangler
+.output
+.vercel
+.netlify
+.vinxi
+app.config.timestamp_*.js
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+*.launch
+.settings/
+
+# System Files
+.DS_Store
+Thumbs.db
