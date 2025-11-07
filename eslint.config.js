@@ -4,6 +4,7 @@ import importPlugin from "eslint-plugin-import";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import solidPlugin from "eslint-plugin-solid";
 import solid from "eslint-plugin-solid/configs/typescript";
+import globals from "globals";
 
 export default [
   js.configs.recommended,
@@ -11,6 +12,7 @@ export default [
     files: ["**/*.{ts,tsx}"],
     ...solid,
     languageOptions: {
+      globals: { ...globals.browser, ...globals.node },
       parser: tsParser,
       parserOptions: {
         project: "tsconfig.json",
