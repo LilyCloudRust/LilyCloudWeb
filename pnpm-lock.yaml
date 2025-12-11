@@ -52,7 +52,7 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
       vite:
-        specifier: ^7.2.1
+        specifier: ^7.2.6
         version: 7.2.6(yaml@2.8.2)
       vite-plugin-solid:
         specifier: ^2.11.8
