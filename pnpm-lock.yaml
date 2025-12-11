@@ -13,49 +13,49 @@ importers:
         version: 1.9.10
     devDependencies:
       '@eslint/js':
-        specifier: ^9.39.1
+        specifier: 9.39.1
         version: 9.39.1
       '@typescript-eslint/parser':
-        specifier: ^8.47.0
+        specifier: 8.48.1
         version: 8.48.1(eslint@9.39.1)(typescript@5.9.3)
       eslint:
-        specifier: ^9.39.1
+        specifier: 9.39.1
         version: 9.39.1
       eslint-config-prettier:
-        specifier: ^10.1.8
+        specifier: 10.1.8
         version: 10.1.8(eslint@9.39.1)
       eslint-plugin-import:
-        specifier: ^2.32.0
+        specifier: 2.32.0
         version: 2.32.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1)(typescript@5.9.3))(eslint@9.39.1)
       eslint-plugin-simple-import-sort:
-        specifier: ^12.1.1
+        specifier: 12.1.1
         version: 12.1.1(eslint@9.39.1)
       eslint-plugin-solid:
-        specifier: ^0.14.5
+        specifier: 0.14.5
         version: 0.14.5(eslint@9.39.1)(typescript@5.9.3)
       globals:
-        specifier: ^16.5.0
+        specifier: 16.5.0
         version: 16.5.0
       husky:
-        specifier: ^9.1.7
+        specifier: 9.1.7
         version: 9.1.7
       lint-staged:
-        specifier: ^16.2.7
+        specifier: 16.2.7
         version: 16.2.7
       prettier:
-        specifier: ^3.6.2
+        specifier: 3.7.4
         version: 3.7.4
       solid-devtools:
-        specifier: ^0.34.3
+        specifier: 0.34.4
         version: 0.34.4(solid-js@1.9.10)(vite@7.2.6(yaml@2.8.2))
       typescript:
-        specifier: ^5.7.2
+        specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.2.6
+        specifier: 7.2.6
         version: 7.2.6(yaml@2.8.2)
       vite-plugin-solid:
-        specifier: ^2.11.8
+        specifier: 2.11.10
         version: 2.11.10(solid-js@1.9.10)(vite@7.2.6(yaml@2.8.2))
 
 packages:
