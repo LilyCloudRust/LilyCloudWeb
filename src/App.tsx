@@ -1,14 +1,11 @@
-import type { Component } from "solid-js";
+import { Route, Router } from "@solidjs/router";
 
-import Comp from "./Comp";
+import MainPage from "./pages/MainPage";
 
-const App: Component = () => {
+export default function App() {
   return (
-    <>
-      <h1>Hello world!!!!</h1>
-      <Comp />
-    </>
+    <Router>
+      <Route path="/" component={MainPage} />
+    </Router>
   );
-};
-
-export default App;
+}

@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #b86b6f;
+  --color-background: #fcf9f9;
+  --color-text-primary: #201c1c;
+  --color-text-secondary: #6f6c6c;
+  --color-hover: #f8ebeb;
+  --color-border: #ebd9d9;
+
+  /* Not used. */
+  --color-main-bg: #ebd9d9;
+  --color-secondary: #edc1c2;
+  --color-subtle: #eda9ab;
+  --color-bold: #cb8b8d;
+  --color-muted: #b3676b;
+  --color-: #9b434a;
+}
+
+.dark {
+  --color-primary: #f2c2ca;
+  --color-background: #232222;
+  --color-text-primary: #fffeff;
+  --color-text-secondary: #c8bdbe;
+  --color-hover: #322f2f;
+  --color-border: #343333;
+
+  /* Not used. */
+  --color-subtle-bg: #39263b;
+  --color-main-bg: #060206;
+  --color-secondary: #eda9ab;
+  --color-bold: #240927;
+  --color-muted: #2e1731;
+  --color-danger: #240927;
+}
+
+/*@layer base {
+  body {
+    background-image:
+      url("/background.svg"),
+      linear-gradient(to right, #e0e0e0 1px, transparent 1px),
+      linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
+    background-size:
+      cover,
+      20px 20px,
+      20px 20px;
+    background-repeat: no-repeat, repeat, repeat;
+  }
+}*/
