@@ -1,8 +1,20 @@
 import type { JSX } from "solid-js";
 
-export default function Sidebar(): JSX.Element {
+type SidebarProps = {
+  visible: boolean;
+};
+
+export default function Sidebar(props: SidebarProps): JSX.Element {
   return (
-    <aside class="h-full bg-(--color-background) border-r border-(--color-border) p-4 flex flex-col">
+    <aside
+      class={
+        "h-full bg-(--color-background) p-4 flex flex-col transition-all duration-100 shadow-lg " +
+        (props.visible
+          ? "translate-x-0 opacity-100"
+          : "-translate-x-full opacity-0 pointer-events-none")
+      }
+      style="will-change: transform, opacity;"
+    >
       <nav class="flex flex-col gap-2">
         <a
           href="#"
