@@ -1,13 +1,13 @@
 // src/pages/MainPage.tsx
+import { FolderOpen } from "lucide-solid";
 import { Component, createSignal, Show } from "solid-js";
-import { useFiles } from "../queries/files";
-import { useFileOperations } from "../hooks/useFileOperations";
 
-import Sidebar from "../components/Sidebar";
-import Topbar from "../components/Topbar";
 import { FileGridView } from "../components/file-browser/FileGridView";
 import { FileListView } from "../components/file-browser/FileListView";
-import { FolderOpen } from "lucide-solid";
+import Sidebar from "../components/Sidebar";
+import Topbar from "../components/Topbar";
+import { useFileOperations } from "../hooks/useFileOperations";
+import { useFiles } from "../queries/files";
 
 const MainPage: Component = () => {
   // 1. 状态管理

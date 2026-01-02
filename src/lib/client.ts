@@ -1,6 +1,6 @@
 // src/lib/client.ts
-import axios from "axios";
 import { QueryClient } from "@tanstack/solid-query";
+import axios from "axios";
 
 // 1. 创建 Axios 实例
 export const api = axios.create({

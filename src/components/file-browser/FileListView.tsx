@@ -1,8 +1,9 @@
 // src/components/file-browser/FileListView.tsx
+import { Trash2 } from "lucide-solid";
 import { Component, For } from "solid-js";
+
 import { FileItem } from "../../types/api";
 import { FileIcon } from "./FileIcon";
-import { Trash2 } from "lucide-solid";
 
 interface Props {
   files: FileItem[];

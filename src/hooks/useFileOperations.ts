@@ -1,10 +1,10 @@
 // src/hooks/useFileOperations.ts
 import { createMutation } from "@tanstack/solid-query";
-import { api, queryClient } from "../lib/client";
 import { Accessor } from "solid-js";
 
+import { api, queryClient } from "../lib/client";
+
 export const useFileOperations = (currentPath: Accessor<string>) => {
-  // 删除逻辑
   const deleteMutation = createMutation(() => ({
     mutationFn: async (filename: string) => {
       const fullPath =
@@ -15,12 +15,11 @@ export const useFileOperations = (currentPath: Accessor<string>) => {
     onError: (err) => alert("Delete failed"),
   }));
 
-  // 上传逻辑 (已修复参数问题)
   const uploadMutation = createMutation(() => ({
     mutationFn: async (file: File) => {
       const formData = new FormData();
-      formData.append("files", file); // 注意复数 files
-      formData.append("dir", currentPath()); // 注意 dir
+      formData.append("files", file);
+      formData.append("dir", currentPath());
 
       return api.post("/files/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },

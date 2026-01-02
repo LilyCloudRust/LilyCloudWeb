@@ -1,13 +1,13 @@
-import { Component, Show } from "solid-js";
-import { authStore } from "../store/auth";
 import {
-  Search,
-  LogOut,
-  User,
+  ChevronLeft,
   LayoutGrid,
   List as ListIcon,
-  ChevronLeft,
+  LogOut,
+  Search,
 } from "lucide-solid";
+import { Component, Show } from "solid-js";
+
+import { authStore } from "../store/auth";
 
 interface TopbarProps {
   currentPath: string;
@@ -17,7 +17,6 @@ interface TopbarProps {
 }
 
 const Topbar: Component<TopbarProps> = (props) => {
-  // 生成面包屑数据
   const breadcrumbs = () => {
     const parts = props.currentPath.split("/").filter(Boolean);
     let pathAcc = "";
@@ -37,7 +36,6 @@ const Topbar: Component<TopbarProps> = (props) => {
         <Show when={breadcrumbs().length > 1}>
           <button
             onClick={() => {
-              // 计算上一级路径
               const parts = props.currentPath.split("/").filter(Boolean);
               parts.pop();
               const parentPath = "/" + parts.join("/");

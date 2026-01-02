@@ -1,8 +1,9 @@
 // src/components/file-browser/FileGridView.tsx
+import { Camera, Trash2 } from "lucide-solid";
 import { Component, For } from "solid-js";
+
 import { FileItem } from "../../types/api";
 import { FileIcon } from "./FileIcon";
-import { Trash2, UploadCloud } from "lucide-solid";
 
 interface Props {
   files: FileItem[];
@@ -48,7 +49,7 @@ export const FileGridView: Component<Props> = (props) => {
         onClick={props.onUploadClick}
         class="flex flex-col items-center justify-center gap-2 p-4 rounded-xl border-2 border-dashed border-gray-200 hover:border-blue-400 hover:bg-blue-50/50 cursor-pointer transition-all text-gray-400 hover:text-blue-500"
       >
-        <UploadCloud size={32} />
+        <Camera size={32} />
         <span class="text-xs font-medium">Upload</span>
       </div>
     </div>

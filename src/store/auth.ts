@@ -1,7 +1,8 @@
 // src/store/auth.ts
-import { createSignal, createRoot } from "solid-js";
+import { createRoot, createSignal } from "solid-js";
+
 import { api } from "../lib/client";
-import type { User, AuthResponse } from "../types/api";
+import type { AuthResponse, User } from "../types/api";
 
 function createAuthStore() {
   const [user, setUser] = createSignal<User | null>(null);
@@ -31,7 +32,7 @@ function createAuthStore() {
     try {
       const res = await api.get<User>("/auth/whoami");
       setUser(res.data);
-    } catch (e) {
+    } catch (err) {
       logout();
     }
   };

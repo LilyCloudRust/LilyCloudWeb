@@ -1,6 +1,6 @@
-import { Component } from "solid-js";
 import { A, useLocation } from "@solidjs/router";
-import { FolderOpen, Shield, Settings, Cloud } from "lucide-solid";
+import { Cloud,FolderOpen, Settings, Shield } from "lucide-solid";
+import { Component } from "solid-js";
 
 const Sidebar: Component = () => {
   const location = useLocation();

@@ -1,13 +1,13 @@
 // src/App.tsx
-import { type Component } from "solid-js";
-import { Router, Route } from "@solidjs/router";
+import { Route,Router } from "@solidjs/router";
 import { QueryClientProvider } from "@tanstack/solid-query";
-import { queryClient } from "./lib/client";
-import { authStore } from "./store/auth";
+import { type Component } from "solid-js";
 
+import { queryClient } from "./lib/client";
+import Login from "./pages/Login"; // 假设你已创建
 // 懒加载页面
 import MainPage from "./pages/MainPage";
-import Login from "./pages/Login"; // 假设你已创建
+import { authStore } from "./store/auth";
 // import AdminPage from './pages/AdminPage';
 
 const App: Component = () => {

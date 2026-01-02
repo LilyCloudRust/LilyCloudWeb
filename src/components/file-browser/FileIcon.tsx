@@ -1,14 +1,12 @@
 // src/components/file-browser/FileIcon.tsx
-import { Component } from "solid-js";
 import {
-  Folder,
-  // 1. 修改这里：把导入的图标重命名为 DefaultFile，避免和组件名冲突
   File as DefaultFile,
+  Folder,
   Image as ImageIcon,
-  Video,
   Music,
-  FileText,
+  Video,
 } from "lucide-solid";
+import { Component } from "solid-js";
 
 interface Props {
   type: "file" | "directory";
@@ -38,7 +36,5 @@ export const FileIcon: Component<Props> = (props) => {
     return <Video class={`text-red-500 ${className}`} size={iconSize} />;
   if (mime.startsWith("audio"))
     return <Music class={`text-green-500 ${className}`} size={iconSize} />;
-
-  // 2. 修改这里：使用重命名后的 DefaultFile
   return <DefaultFile class={`text-gray-400 ${className}`} size={iconSize} />;
 };

@@ -1,6 +1,7 @@
 // src/pages/Login.tsx
-import { Component, createSignal, Show } from "solid-js";
 import { useNavigate } from "@solidjs/router";
+import { Component, createSignal, Show } from "solid-js";
+
 import { api } from "../lib/client";
 import { authStore } from "../store/auth";
 import type { AuthResponse } from "../types/api";

@@ -1,8 +1,9 @@
 // src/queries/files.ts
 import { createQuery } from "@tanstack/solid-query";
+import { Accessor } from "solid-js";
+
 import { api } from "../lib/client";
 import type { FileListResponse } from "../types/api";
-import { Accessor } from "solid-js";
 
 // 获取文件列表 Hook
 export const useFiles = (path: Accessor<string>) => {
