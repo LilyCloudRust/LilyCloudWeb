@@ -1,11 +1,17 @@
-import devtools from "solid-devtools/vite";
+// vite.config.ts
 import { defineConfig } from "vite";
 import solidPlugin from "vite-plugin-solid";
 
 export default defineConfig({
-  plugins: [devtools(), solidPlugin()],
+  plugins: [solidPlugin()],
   server: {
-    port: 3000,
+    port: 5173,
+    proxy: {
+      "/api": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+    },
   },
   build: {
     target: "esnext",

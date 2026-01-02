@@ -1,17 +1,11 @@
+// src/index.tsx
 /* @refresh reload */
-import "./index.css";
-import "solid-devtools";
-
 import { render } from "solid-js/web";
-
+import "./index.css"; // 确保这里引入了 Tailwind 指令
 import App from "./App";
 
 const root = document.getElementById("root");
 
-if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
-  throw new Error(
-    "Root element not found. Did you forget to add it to your index.html? Or maybe the id attribute got misspelled?",
-  );
+if (root instanceof HTMLElement) {
+  render(() => <App />, root);
 }
-
-render(() => <App />, root!);
