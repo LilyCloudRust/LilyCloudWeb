@@ -1,5 +1,5 @@
 // src/App.tsx
-import { Route,Router } from "@solidjs/router";
+import { Route, Router } from "@solidjs/router";
 import { QueryClientProvider } from "@tanstack/solid-query";
 import { type Component } from "solid-js";
 
@@ -7,8 +7,8 @@ import { queryClient } from "./lib/client";
 import Login from "./pages/Login"; // 假设你已创建
 // 懒加载页面
 import MainPage from "./pages/MainPage";
+import Settings from "./pages/Settings"; // 1. 引入 Settings
 import { authStore } from "./store/auth";
-// import AdminPage from './pages/AdminPage';
 
 const App: Component = () => {
   return (
@@ -27,6 +27,17 @@ const App: Component = () => {
               return null;
             }
             return <MainPage />;
+          }}
+        />
+        {/* 2. 注册 Settings 路由 */}
+        <Route
+          path="/settings"
+          component={() => {
+            if (!authStore.isAuthenticated()) {
+              window.location.href = "/login";
+              return null;
+            }
+            return <Settings />;
           }}
         />
 
