@@ -34,8 +34,8 @@ const Login: Component = () => {
       // 不需要手动设置 Content-Type，Axios 默认就是 application/json
       const res = await api.post<AuthResponse>("/auth/login", payload);
 
-      // 更新全局状态
-      authStore.login(res.data);
+      // 🟢 修改这里：将 payload (包含明文密码) 传给 login 方法
+      authStore.login(res.data, { user: username(), pass: password() });
 
       // 跳转回首页
       navigate("/", { replace: true });

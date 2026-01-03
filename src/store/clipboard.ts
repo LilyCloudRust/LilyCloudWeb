@@ -1,5 +1,5 @@
 // src/store/clipboard.ts
-import { createRoot,createSignal } from "solid-js";
+import { createRoot, createSignal } from "solid-js";
 
 export interface ClipboardItem {
   files: string[]; // 文件名列表

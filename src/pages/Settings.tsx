@@ -1,4 +1,4 @@
-import { Check, Copy, Globe, LogOut,Shield, User } from "lucide-solid";
+import { Check, Copy, Globe, LogOut, Shield, User } from "lucide-solid";
 import { Component, createMemo, createSignal, Show } from "solid-js";
 
 import Sidebar from "../components/Sidebar";

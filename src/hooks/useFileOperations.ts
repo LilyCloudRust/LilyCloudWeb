@@ -1,14 +1,16 @@
+// src/hooks/useFileOperations.ts
 import { createMutation } from "@tanstack/solid-query";
-import { Accessor } from "solid-js";
-
 import { api, queryClient } from "../lib/client";
+import { Accessor } from "solid-js";
 import { clipboardStore } from "../store/clipboard";
 
+// 辅助函数：标准化路径
 const normalizePath = (p: string) => {
   if (p === "/") return p;
   return p.endsWith("/") ? p.slice(0, -1) : p;
 };
 
+// 辅助函数：拆分路径
 const splitPath = (fullPath: string) => {
   const cleanPath = fullPath.startsWith("//")
     ? fullPath.substring(1)
@@ -22,24 +24,19 @@ const splitPath = (fullPath: string) => {
   };
 };
 
-// ⏳ 辅助函数：延迟等待
+// 辅助函数：延迟
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const useFileOperations = (currentPath: Accessor<string>) => {
-  // 🔄 核心修复：强力刷新函数
   const refreshFiles = async () => {
-    // 1. 延迟 150ms，等待后端文件系统索引更新（解决粘贴后不显示的问题）
     await delay(150);
-
-    // 2. 强制作废缓存，触发重新请求
-    // queryKey: ['files'] 会匹配所有以 ['files'] 开头的查询（包括当前的路径）
     return queryClient.invalidateQueries({
       queryKey: ["files"],
-      refetchType: "all", // 强制刷新所有状态（包括 active/inactive）
+      refetchType: "all",
     });
   };
 
-  // 1. 删除文件
+  // --- 1. 删除文件 ---
   const deleteMutation = createMutation(() => ({
     mutationFn: async (filename: string) => {
       const fullPath =
@@ -47,7 +44,7 @@ export const useFileOperations = (currentPath: Accessor<string>) => {
       const { dir, name } = splitPath(fullPath);
       return api.delete("/files", { params: { dir: dir }, data: [name] });
     },
-    onSuccess: refreshFiles, // 使用新的刷新逻辑
+    onSuccess: refreshFiles,
     onError: (err: any) =>
       alert(
         "Delete failed: " +
@@ -55,7 +52,7 @@ export const useFileOperations = (currentPath: Accessor<string>) => {
       ),
   }));
 
-  // 2. 上传文件
+  // --- 2. 上传文件 ---
   const uploadMutation = createMutation(() => ({
     mutationFn: async (file: File) => {
       const formData = new FormData();
@@ -65,7 +62,7 @@ export const useFileOperations = (currentPath: Accessor<string>) => {
         headers: { "Content-Type": "multipart/form-data" },
       });
     },
-    onSuccess: refreshFiles, // 使用新的刷新逻辑
+    onSuccess: refreshFiles,
     onError: (err: any) =>
       alert(
         "Upload failed: " +
@@ -73,7 +70,7 @@ export const useFileOperations = (currentPath: Accessor<string>) => {
       ),
   }));
 
-  // 3. 新建文件夹
+  // --- 3. 新建文件夹 ---
   const createFolderMutation = createMutation(() => ({
     mutationFn: async (folderName: string) => {
       const fullPath =
@@ -82,7 +79,7 @@ export const useFileOperations = (currentPath: Accessor<string>) => {
           : `${currentPath()}/${folderName}`;
       return api.post("/files/directory", null, { params: { path: fullPath } });
     },
-    onSuccess: refreshFiles, // 使用新的刷新逻辑
+    onSuccess: refreshFiles,
     onError: (err: any) =>
       alert(
         "Create folder failed: " +
@@ -90,15 +87,51 @@ export const useFileOperations = (currentPath: Accessor<string>) => {
       ),
   }));
 
-  // 4. 重命名 (暂不支持)
+  // --- 4. 重命名 (通过 Vite Proxy + Bearer Token) ---
   const renameMutation = createMutation(() => ({
-    mutationFn: async () => {
-      alert("Rename is not supported by the current API.");
-      throw new Error("Rename not supported");
+    mutationFn: async (payload: { oldName: string; newName: string }) => {
+      const dir = currentPath();
+
+      const srcPath =
+        dir === "/" ? `/${payload.oldName}` : `${dir}/${payload.oldName}`;
+      const dstPath =
+        dir === "/" ? `/${payload.newName}` : `${dir}/${payload.newName}`;
+
+      const encodeWebDavPath = (p: string) =>
+        p.split("/").map(encodeURIComponent).join("/");
+
+      // 🟢 恢复：使用相对路径，让请求经过 Vite 代理
+      const webdavSrcUrl = `/webdav${encodeWebDavPath(srcPath)}`;
+
+      // 🟢 恢复：Destination Header 也使用相对路径对应的完整 URL
+      const webdavDstHeader = `${window.location.origin}/webdav${encodeWebDavPath(dstPath)}`;
+
+      // 使用 api 实例，它会自动携带 Bearer Token
+      // 覆盖 baseURL，确保请求从 /webdav 开始
+      return api.request({
+        method: "MOVE",
+        url: webdavSrcUrl,
+        baseURL: "/", // 请求将是 http://localhost:5173/webdav/...
+        headers: {
+          Destination: webdavDstHeader,
+          Overwrite: "F",
+        },
+      });
+    },
+    onSuccess: refreshFiles,
+    onError: (err: any) => {
+      console.error("Rename failed:", err);
+      if (err.response?.status === 401) {
+        alert(
+          "Rename failed: Authentication rejected. The proxy might still be stripping headers.",
+        );
+      } else {
+        alert(`Rename failed: ${err.response?.data?.detail || err.message}`);
+      }
     },
   }));
 
-  // 5. 下载文件
+  // --- 5. 下载文件 ---
   const downloadFile = async (filename: string) => {
     try {
       const fullPath =
@@ -115,13 +148,13 @@ export const useFileOperations = (currentPath: Accessor<string>) => {
       link.click();
       link.remove();
       window.URL.revokeObjectURL(url);
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
       alert("Download failed");
     }
   };
 
-  // 6. 粘贴 (复制/移动)
+  // --- 6. 粘贴 (复制/移动) ---
   const pasteMutation = createMutation(() => ({
     mutationFn: async () => {
       const data = clipboardStore.clipboard();
@@ -132,9 +165,7 @@ export const useFileOperations = (currentPath: Accessor<string>) => {
       const { files, mode } = data;
 
       if (sourceDir === targetDir) {
-        throw new Error(
-          "Cannot paste into the same folder. API does not support duplication/renaming.",
-        );
+        throw new Error("Cannot paste into the same folder.");
       }
 
       const endpoint = mode === "copy" ? "/files/copy" : "/files/move";
@@ -144,11 +175,7 @@ export const useFileOperations = (currentPath: Accessor<string>) => {
       });
     },
     onSuccess: async () => {
-      // 1. 先刷新列表 (带延迟)
       await refreshFiles();
-
-      // 2. 如果是剪切，操作成功后清空剪贴板
-      // 这样 UI 上的“半透明”效果就会消失
       if (clipboardStore.clipboard()?.mode === "move") {
         clipboardStore.clear();
       }
@@ -160,9 +187,7 @@ export const useFileOperations = (currentPath: Accessor<string>) => {
       ) {
         alert(`Paste Failed: Some files already exist in destination.`);
       } else if (err.message?.includes("same folder")) {
-        alert(
-          "Cannot copy/paste into the same folder (Duplicates not supported by backend).",
-        );
+        alert("Cannot copy/paste into the same folder.");
       } else {
         alert(
           `Paste failed: ${err.response?.data?.detail?.[0]?.msg || err.message}`,

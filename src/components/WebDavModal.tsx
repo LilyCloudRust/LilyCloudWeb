@@ -1,5 +1,5 @@
-import { Check,Copy, Globe, X } from "lucide-solid";
-import { Component, createMemo,Show } from "solid-js";
+import { Check, Copy, Globe, X } from "lucide-solid";
+import { Component, createMemo, Show } from "solid-js";
 import { createSignal } from "solid-js";
 
 import { authStore } from "../store/auth"; // 1. 引入 authStore

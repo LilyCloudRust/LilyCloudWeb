@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/solid-query";
 import { type Component } from "solid-js";
 
 import { queryClient } from "./lib/client";
+import Admin from "./pages/Admin";
 import Login from "./pages/Login"; // 假设你已创建
 // 懒加载页面
 import MainPage from "./pages/MainPage";
@@ -16,7 +17,6 @@ const App: Component = () => {
       <Router>
         {/* 简单的路由守卫逻辑可以在组件内部实现，或使用包装组件 */}
         <Route path="/login" component={Login} />
-
         {/* 受保护的路由 */}
         <Route
           path="/"
@@ -40,8 +40,7 @@ const App: Component = () => {
             return <Settings />;
           }}
         />
-
-        {/* 更多路由... */}
+        <Route path="/admin" component={Admin} />;{/* 更多路由... */}
       </Router>
     </QueryClientProvider>
   );

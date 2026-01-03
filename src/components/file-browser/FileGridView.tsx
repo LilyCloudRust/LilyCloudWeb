@@ -1,12 +1,8 @@
-// src/components/file-browser/FileGridView.tsx
-import { useLocation } from "@solidjs/router"; // 获取当前路径如果不传prop的话，但这里推荐直接比对文件
-import { Camera,Trash2 } from "lucide-solid";
+import { Camera, Trash2 } from "lucide-solid";
 import { Component, For } from "solid-js";
-
-import { clipboardStore } from "../../store/clipboard"; // 1. 引入 Store
+import { clipboardStore } from "../../store/clipboard";
 import { FileItem } from "../../types/api";
 import { FileIcon } from "./FileIcon";
-
 interface Props {
   files: FileItem[];
   onNavigate: (name: string) => void;
@@ -16,11 +12,8 @@ interface Props {
 }
 
 export const FileGridView: Component<Props> = (props) => {
-  // 2. 辅助函数：判断文件是否处于“剪切”状态
   const isCut = (fileName: string) => {
     const clip = clipboardStore.clipboard();
-    // 只有当模式是 'move' (剪切) 且文件名匹配时，才变淡
-    // 注意：严格来说还应该判断 currentPath === clip.sourceDir，但因为文件名唯一性通常还好
     return clip?.mode === "move" && clip.files.includes(fileName);
   };
 
@@ -53,8 +46,13 @@ export const FileGridView: Component<Props> = (props) => {
                 <p class="text-sm font-medium text-gray-700 truncate px-2 group-hover:text-blue-700">
                   {file.name}
                 </p>
+                {/* 🔴 修复这里：明确判断 type 是否为 directory */}
                 <p class="text-xs text-gray-400 mt-1">
-                  {file.size ? (file.size / 1024).toFixed(1) + " KB" : "Folder"}
+                  {file.type === "directory"
+                    ? "Folder"
+                    : file.size
+                      ? (file.size / 1024).toFixed(1) + " KB"
+                      : "0 KB"}
                 </p>
               </div>
 

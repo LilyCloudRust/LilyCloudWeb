@@ -1,6 +1,7 @@
 // src/pages/MainPage.tsx
-import { FolderOpen,FolderPlus } from "lucide-solid";
-import { Component, createSignal, onCleanup,Show } from "solid-js";
+import { FolderOpen, FolderPlus } from "lucide-solid";
+import { Component, createSignal, Show } from "solid-js";
+import { createMemo } from "solid-js"; // 引入 createMemo
 
 import { ContextMenu } from "../components/ContextMenu";
 import { FileGridView } from "../components/file-browser/FileGridView";
@@ -40,6 +41,11 @@ const MainPage: Component = () => {
     const name = prompt("Enter folder name:");
     if (name) createFolder(name);
   };
+  // 计算当前目录下文件的总大小
+  const currentFolderSize = createMemo(() => {
+    const items = fileQuery.data?.items || [];
+    return items.reduce((acc, item) => acc + (item.size || 0), 0);
+  });
 
   // 文件上的右键
   const handleFileContextMenu = (e: MouseEvent, file: any) => {
@@ -56,9 +62,29 @@ const MainPage: Component = () => {
   };
 
   const handleRename = (file: any) => {
-    const newName = prompt("Rename to:", file.name);
-    if (newName && newName !== file.name) {
-      // renameFile({ oldName: file.name, newName });
+    const originalName = file.name;
+    let nameWithoutExt = originalName;
+    let extension = "";
+
+    // 1. 如果是文件且不是以 . 开头（隐藏文件），则分离后缀
+    if (file.type !== "directory" && originalName.lastIndexOf(".") > 0) {
+      const lastDotIndex = originalName.lastIndexOf(".");
+      nameWithoutExt = originalName.substring(0, lastDotIndex);
+      extension = originalName.substring(lastDotIndex); // 包含 . (例如 .txt)
+    }
+
+    // 2. 弹出框只显示文件名部分
+    const newBaseName = prompt("Rename to:", nameWithoutExt);
+
+    // 3. 如果用户取消或没改名，直接返回
+    if (!newBaseName || newBaseName === nameWithoutExt) return;
+
+    // 4. 拼回后缀
+    const finalName = newBaseName + extension;
+
+    // 5. 再次确认没变（虽然上面判断过，但拼完可能一样）
+    if (finalName !== originalName) {
+      renameFile({ oldName: originalName, newName: finalName });
     }
   };
 
@@ -83,7 +109,11 @@ const MainPage: Component = () => {
       class="flex h-screen bg-white text-gray-800 font-sans overflow-hidden"
       onClick={handleClick}
     >
-      <Sidebar />
+      {/* 传入计算出的大小，假装总容量是 10GB (10 * 1024^3) */}
+      <Sidebar
+        storageUsed={currentFolderSize()}
+        storageTotal={100 * 1024 * 1024}
+      />
 
       <div class="flex-1 flex flex-col h-full relative">
         <Topbar

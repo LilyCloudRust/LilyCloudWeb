@@ -8,7 +8,7 @@ import {
   Scissors,
   Trash2,
 } from "lucide-solid";
-import { Component, onCleanup, onMount,Show } from "solid-js";
+import { Component, onCleanup, onMount, Show } from "solid-js";
 
 import { clipboardStore } from "../store/clipboard";
 
