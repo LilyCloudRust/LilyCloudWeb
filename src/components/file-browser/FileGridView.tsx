@@ -1,5 +1,6 @@
 import { Camera, Trash2 } from "lucide-solid";
 import { Component, For } from "solid-js";
+
 import { clipboardStore } from "../../store/clipboard";
 import { FileItem } from "../../types/api";
 import { FileIcon } from "./FileIcon";
