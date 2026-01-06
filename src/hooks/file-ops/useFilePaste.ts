@@ -5,7 +5,7 @@ import { Accessor } from "solid-js";
 import { api, queryClient } from "../../lib/client";
 import { clipboardStore } from "../../store/clipboard";
 import { TaskResponse } from "../../types";
-import { delay,getErrorMessage, normalizePath } from "../../utils/file";
+import { delay, getErrorMessage, normalizePath } from "../../utils/file";
 
 export const useFilePaste = (currentPath: Accessor<string>) => {
   return createMutation(() => ({

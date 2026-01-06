@@ -2,7 +2,7 @@ import { createMutation } from "@tanstack/solid-query";
 import { Accessor } from "solid-js";
 
 import { api, queryClient } from "../../lib/client";
-import { delay,getErrorMessage } from "../../utils/file";
+import { delay, getErrorMessage } from "../../utils/file";
 
 export const useFolderCreate = (currentPath: Accessor<string>) => {
   return createMutation(() => ({

@@ -13,8 +13,8 @@ import MainPage from "./pages/MainPage";
 import Settings from "./pages/Settings"; // 1. 引入 Settings
 import { authStore } from "./store/auth";
 
-const TrashPage = lazy(() => import("./pages/TrashPage")); // 懒加载
-
+const TrashPage = lazy(() => import("./pages/TrashPage"));
+const StoragePage = lazy(() => import("./pages/StoragePage"));
 const App: Component = () => {
   return (
     <QueryClientProvider client={queryClient}>
@@ -47,6 +47,13 @@ const App: Component = () => {
         <Route path="/admin" component={Admin} />;
         <Route path="/trash" component={TrashPage} />
         {/* 更多路由... */}
+        <Route path="/storages" component={StoragePage} />
+        <Route
+          path="*404"
+          component={() => (
+            <div class="p-10 text-center">404: Page Not Found</div>
+          )}
+        />
       </Router>
     </QueryClientProvider>
   );

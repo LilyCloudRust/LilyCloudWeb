@@ -3,7 +3,7 @@ import { createMutation } from "@tanstack/solid-query";
 
 import { api, queryClient } from "../../lib/client";
 import { CopyCommand, TaskResponse } from "../../types";
-import { delay,getErrorMessage } from "../../utils/file";
+import { delay, getErrorMessage } from "../../utils/file";
 
 export const useFileCopy = () => {
   return createMutation(() => ({

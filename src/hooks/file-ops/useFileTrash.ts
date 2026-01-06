@@ -3,8 +3,8 @@ import { createMutation } from "@tanstack/solid-query";
 import { Accessor } from "solid-js";
 
 import { api, queryClient } from "../../lib/client";
-import { TaskResponse,TrashCommand } from "../../types";
-import { delay,getErrorMessage, splitPath } from "../../utils/file";
+import { TaskResponse, TrashCommand } from "../../types";
+import { delay, getErrorMessage, splitPath } from "../../utils/file";
 
 export const useFileTrash = (currentPath: Accessor<string>) => {
   return createMutation(() => ({

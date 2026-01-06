@@ -1,5 +1,5 @@
 // src/components/file-browser/FileGridView.tsx
-import { Camera, CheckCircle,Trash2 } from "lucide-solid"; // 1. 引入 CheckCircle
+import { Camera, CheckCircle, Trash2 } from "lucide-solid"; // 1. 引入 CheckCircle
 import { Component, For } from "solid-js";
 
 import { clipboardStore } from "../../store/clipboard";
