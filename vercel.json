@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "http://8.130.168.243:8000/api/:match*"
+    },
+    {
+      "source": "/webdav/:match*",
+      "destination": "http://8.130.168.243:8000/webdav/:match*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
