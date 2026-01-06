@@ -1,6 +1,6 @@
 // src/types/files.ts
 import { SortBy, SortOrder } from "./common";
-import { FileItem, FileType,TrashItem } from "./models";
+import { FileItem, FileType, TrashItem } from "./models";
 
 // --- Query Parameters (GET 请求参数) ---
 

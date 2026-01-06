@@ -1,5 +1,5 @@
 // src/pages/TrashPage.tsx
-import { AlertTriangle,RotateCcw, Trash2 } from "lucide-solid";
+import { AlertTriangle, RotateCcw, Trash2 } from "lucide-solid";
 import { Component, createSignal, For, Show } from "solid-js";
 
 import { FileIcon } from "../components/file-browser/FileIcon";

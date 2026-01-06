@@ -3,7 +3,7 @@ import { Accessor } from "solid-js";
 
 import { api, queryClient } from "../../lib/client";
 import { DeleteCommand, TaskResponse } from "../../types";
-import { delay,getErrorMessage, splitPath } from "../../utils/file";
+import { delay, getErrorMessage, splitPath } from "../../utils/file";
 
 export const useFileDelete = (currentPath: Accessor<string>) => {
   return createMutation(() => ({

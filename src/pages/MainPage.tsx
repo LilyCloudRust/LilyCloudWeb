@@ -1,7 +1,7 @@
 // src/pages/MainPage.tsx
 import { useNavigate } from "@solidjs/router";
 import { Download, FolderOpen, FolderPlus, Trash2, X } from "lucide-solid";
-import { Component, createMemo,createSignal, Show } from "solid-js";
+import { Component, createMemo, createSignal, Show } from "solid-js";
 
 import { ContextMenu } from "../components/ContextMenu";
 import { FileGridView } from "../components/file-browser/FileGridView";

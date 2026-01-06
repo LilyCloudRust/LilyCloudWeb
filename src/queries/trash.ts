@@ -1,5 +1,5 @@
 // src/queries/trash.ts
-import { createMutation,createQuery } from "@tanstack/solid-query";
+import { createMutation, createQuery } from "@tanstack/solid-query";
 import { Accessor } from "solid-js";
 
 import { api, queryClient } from "../lib/client";

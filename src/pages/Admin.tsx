@@ -17,13 +17,6 @@ const Admin: Component = () => {
     enabled: activeTab() === "users", // 只有切到这个 tab 才请求
   }));
 
-  const storagesQuery = createQuery(() => ({
-    queryKey: ["admin", "storages"],
-    queryFn: async () =>
-      (await api.get<StorageListResponse>("/admin/storages")).data,
-    enabled: activeTab() === "storages",
-  }));
-
   return (
     <div class="flex h-screen bg-white text-gray-800 font-sans overflow-hidden">
       <Sidebar />
@@ -45,16 +38,6 @@ const Admin: Component = () => {
               }`}
             >
               Users
-            </button>
-            <button
-              onClick={() => setActiveTab("storages")}
-              class={`pb-2 px-4 font-medium transition-colors border-b-2 ${
-                activeTab() === "storages"
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
-              }`}
-            >
-              Storages
             </button>
           </div>
 
@@ -110,61 +93,6 @@ const Admin: Component = () => {
                     </For>
                   </tbody>
                 </table>
-              </Show>
-            </div>
-          </Show>
-
-          {/* Storages Content */}
-          <Show when={activeTab() === "storages"}>
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-              <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-                <h3 class="font-bold text-gray-700 flex items-center gap-2">
-                  <HardDrive size={18} /> Storage Mounts
-                </h3>
-                <button class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm flex items-center gap-1 hover:bg-blue-700">
-                  <Plus size={16} /> Add Storage
-                </button>
-              </div>
-
-              <Show
-                when={!storagesQuery.isLoading}
-                fallback={
-                  <div class="p-8 text-center text-gray-400">
-                    Loading storages...
-                  </div>
-                }
-              >
-                <div class="p-4 grid gap-4">
-                  <For each={storagesQuery.data?.items}>
-                    {(storage) => (
-                      <div class="border border-gray-200 rounded-lg p-4 flex items-center justify-between hover:border-blue-300 transition-colors">
-                        <div>
-                          <div class="flex items-center gap-2">
-                            <span class="font-bold text-gray-800">
-                              {storage.mount_path}
-                            </span>
-                            <span
-                              class={`text-xs px-2 py-0.5 rounded ${storage.enabled ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}
-                            >
-                              {storage.enabled ? "Active" : "Disabled"}
-                            </span>
-                          </div>
-                          <div class="text-sm text-gray-500 mt-1">
-                            Type:{" "}
-                            <span class="uppercase font-semibold">
-                              {storage.type}
-                            </span>
-                            <span class="mx-2">|</span>
-                            ID: {storage.storage_id}
-                          </div>
-                        </div>
-                        <button class="text-gray-400 hover:text-red-500">
-                          <Trash2 size={18} />
-                        </button>
-                      </div>
-                    )}
-                  </For>
-                </div>
               </Show>
             </div>
           </Show>
