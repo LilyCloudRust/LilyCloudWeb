@@ -1,6 +1,8 @@
 // src/App.tsx
+// src/App.tsx
 import { Route, Router } from "@solidjs/router";
 import { QueryClientProvider } from "@tanstack/solid-query";
+import { lazy } from "solid-js";
 import { type Component } from "solid-js";
 
 import { queryClient } from "./lib/client";
@@ -10,6 +12,8 @@ import Login from "./pages/Login"; // 假设你已创建
 import MainPage from "./pages/MainPage";
 import Settings from "./pages/Settings"; // 1. 引入 Settings
 import { authStore } from "./store/auth";
+
+const TrashPage = lazy(() => import("./pages/TrashPage")); // 懒加载
 
 const App: Component = () => {
   return (
@@ -40,7 +44,9 @@ const App: Component = () => {
             return <Settings />;
           }}
         />
-        <Route path="/admin" component={Admin} />;{/* 更多路由... */}
+        <Route path="/admin" component={Admin} />;
+        <Route path="/trash" component={TrashPage} />
+        {/* 更多路由... */}
       </Router>
     </QueryClientProvider>
   );
