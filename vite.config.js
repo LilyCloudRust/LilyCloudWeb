@@ -37,6 +37,7 @@ export default defineConfig(({ mode }) => {
           },
         },
       },
+      historyApiFallback: true,
     },
     build: {
       target: "esnext",
