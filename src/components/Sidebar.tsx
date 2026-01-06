@@ -1,6 +1,6 @@
 // src/components/Sidebar.tsx
 import { A, useLocation } from "@solidjs/router";
-import { Cloud, FolderOpen, Settings, Shield } from "lucide-solid";
+import { Cloud, FolderOpen, Settings, Shield, Trash2 } from "lucide-solid";
 import { Component } from "solid-js";
 
 // 定义 Props
@@ -66,6 +66,8 @@ const Sidebar: Component<SidebarProps> = (props) => {
           Locations
         </div>
         <SidebarItem href="/" icon={FolderOpen} label="My Files" />
+        {/* 新增 Trash 入口 */}
+        <SidebarItem href="/trash" icon={Trash2} label="Trash" />
 
         <div class="px-3 text-xs font-semibold text-gray-400 uppercase mb-2 mt-6">
           System

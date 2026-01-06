@@ -4,15 +4,16 @@ import { Component, For } from "solid-js";
 
 // 1. 引入 Store
 import { clipboardStore } from "../../store/clipboard";
-import { FileItem } from "../../types/api";
+import { FileItem } from "../../types";
 import { FileIcon } from "./FileIcon";
 
 interface Props {
   files: FileItem[];
   onNavigate: (name: string) => void;
   onDelete: (name: string) => void;
-  // 确保这里定义了 onContextMenu
   onContextMenu: (e: MouseEvent, file: FileItem) => void;
+  selectedFiles: Set<string>;
+  onToggleSelect: (name: string) => void;
 }
 
 export const FileListView: Component<Props> = (props) => {
