@@ -37,7 +37,7 @@
   "dependencies": {
     "@tanstack/solid-query": "^5.90.19",
     "axios": "^1.13.2",
-    "lucide-solid": "^0.562.0",
+    "lucide-solid": "^0.563.0",
     "solid-js": "^1.9.5"
   },
   "lint-staged": {
